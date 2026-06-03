@@ -1,26 +1,416 @@
+/* ==========================================================================
+   HNCG — Catholic Theology Academic Research Website
+   Global Stylesheet — Tailwind CSS v4
+   ========================================================================== */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ==========================================================================
+   THEME — Custom design tokens for Tailwind v4
+   ========================================================================== */
+
+/* ==========================================================================
+   THEME VARIABLES — Dynamic Reading Settings
+   ========================================================================== */
+
+:root, .theme-light {
+  --reader-bg-main: #FFFEF5;
+  --reader-bg-card: #F8F6F0;
+  --reader-text-main: #1a1a1a;
+  --reader-text-muted: #555555;
+  --reader-heading: #7B2D3B;
+  --reader-heading-secondary: #1B2A4A;
+  --reader-border: rgba(212, 180, 94, 0.35);
+  --reader-blockquote-bg: transparent;
+  --reader-font-size: 1.125rem;
+  --reader-text-link: #7B2D3B;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.theme-parchment {
+  --reader-bg-main: #F4ECD8;
+  --reader-bg-card: #EADCB9;
+  --reader-text-main: #2b1f0d;
+  --reader-text-muted: #5c4a33;
+  --reader-heading: #672736;
+  --reader-heading-secondary: #2b1f0d;
+  --reader-border: rgba(180, 140, 60, 0.45);
+  --reader-blockquote-bg: rgba(123, 45, 59, 0.05);
+  --reader-text-link: #672736;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.theme-dark {
+  --reader-bg-main: #0D1425;
+  --reader-bg-card: #151F38;
+  --reader-text-main: #EEF1F8;
+  --reader-text-muted: #B8C3E4;
+  --reader-heading: #D4B45E;
+  --reader-heading-secondary: #D9DFF0;
+  --reader-border: rgba(212, 175, 55, 0.25);
+  --reader-blockquote-bg: rgba(123, 45, 59, 0.25);
+  --reader-text-link: #D4B45E;
+}
+
+.reader-size-sm { --reader-font-size: 1rem; }
+.reader-size-md { --reader-font-size: 1.125rem; }
+.reader-size-lg { --reader-font-size: 1.25rem; }
+.reader-size-xl { --reader-font-size: 1.375rem; }
+
+@theme {
+  --color-ivory: var(--reader-bg-main, #FFFEF5);
+  --color-parchment: var(--reader-bg-card, #F8F6F0);
+
+  --color-burgundy-50: #FDF2F4;
+  --color-burgundy-100: #FAE6EA;
+  --color-burgundy-200: #F5CCD5;
+  --color-burgundy-300: #EDA5B4;
+  --color-burgundy-400: #E07A90;
+  --color-burgundy-500: #C9506A;
+  --color-burgundy-600: #A93C55;
+  --color-burgundy-700: #7B2D3B;
+  --color-burgundy-800: #672736;
+  --color-burgundy-900: #582333;
+  --color-burgundy-950: #310F19;
+
+  --color-gold-50: #FDFAED;
+  --color-gold-100: #FAF3D1;
+  --color-gold-200: #F4E5A3;
+  --color-gold-300: #E0CB82;
+  --color-gold-400: #D4B45E;
+  --color-gold-500: #C9A84C;
+  --color-gold-600: #B08A3A;
+  --color-gold-700: #926831;
+  --color-gold-800: #79542E;
+  --color-gold-900: #654629;
+  --color-gold-950: #3A2414;
+
+  --color-navy-50: #EEF1F8;
+  --color-navy-100: #D9DFF0;
+  --color-navy-200: #B8C3E4;
+  --color-navy-300: #8EA1D3;
+  --color-navy-400: #677DBE;
+  --color-navy-500: #4A61A9;
+  --color-navy-600: #3A4E8E;
+  --color-navy-700: #2D3D6E;
+  --color-navy-800: #1B2A4A;
+  --color-navy-900: #151F38;
+  --color-navy-950: #0D1425;
+
+  --font-serif: var(--font-playfair), var(--font-noto-serif), Georgia, serif;
+  --font-sans: var(--font-inter), var(--font-noto-sans), system-ui, sans-serif;
+  --font-body-serif: var(--font-noto-serif), Georgia, serif;
+
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ==========================================================================
+   BASE — Foundational defaults & resets
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--reader-bg-main, #FFFEF5);
+  color: var(--reader-text-main, #2D2D2D);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+::selection {
+  background: rgba(123, 45, 59, 0.2);
+  color: #1B2A4A;
+}
+
+a,
+button,
+input,
+textarea,
+select,
+[role="button"] {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:focus-visible {
+  outline: 2px solid #7B2D3B;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   PROSE-CATHOLIC — Beautiful typography for long-read scholarly content
+   Optimised for Vietnamese diacritics (tall ascenders/descenders)
+   ========================================================================== */
+
+.prose-catholic {
+  font-family: var(--reader-font-family, var(--font-body-serif));
+  font-size: var(--reader-font-size, 1.125rem);            /* 18px — optimal for long reading with serif */
+  line-height: 1.85;             /* Balanced line height for Noto Serif */
+  color: var(--reader-text-main, #1a1a1a);                /* Darker color for academic contrast */
+  letter-spacing: 0.003em;
+  word-spacing: 0.02em;
+  hyphens: auto;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* --- Font Switcher Custom Classes --- */
+.reader-font-classic {
+  --reader-font-family: var(--font-serif);
+}
+.reader-font-academic {
+  --reader-font-family: var(--font-body-serif);
+}
+.reader-font-sans {
+  --reader-font-family: var(--font-sans);
+}
+
+/* --- Headings: Playfair Display for classical authority --- */
+.prose-catholic h2 {
+  font-family: var(--font-serif);
+  font-size: 2.125rem;           /* ~34px — majestic academic header */
+  font-weight: 700;
+  color: var(--reader-heading, #7B2D3B);
+  letter-spacing: -0.01em;
+  margin-top: 4.5rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+  text-align: left;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--reader-border, rgba(212, 180, 94, 0.3));
+}
+
+.prose-catholic h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;             /* ~24px */
+  font-weight: 600;
+  color: var(--reader-heading-secondary, #1B2A4A);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* --- Body text --- */
+.prose-catholic p {
+  margin-bottom: 1.35em;
+}
+
+.prose-catholic strong {
+  color: var(--reader-heading-secondary, #1B2A4A);
+  font-weight: 600;
+}
+
+.prose-catholic em {
+  font-style: italic;
+  color: var(--reader-text-muted, #555);
+}
+
+/* --- Block quotes: indented with burgundy left border --- */
+.prose-catholic blockquote {
+  border-left: 3px solid var(--reader-border, rgba(123, 45, 59, 0.4));
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: var(--reader-text-muted, #555);
+  font-style: italic;
+  background-color: var(--reader-blockquote-bg, transparent);
+}
+
+/* --- Links within prose --- */
+.prose-catholic a {
+  color: var(--reader-text-link, #7B2D3B);
+  text-decoration: underline;
+  text-decoration-color: var(--reader-border, rgba(123, 45, 59, 0.3));
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.25s ease, color 0.25s ease;
+}
+
+.prose-catholic a:hover {
+  color: var(--reader-heading, #5A1F2B);
+  text-decoration-color: var(--reader-heading, rgba(123, 45, 59, 0.8));
+}
+
+/* --- Lists within prose --- */
+.prose-catholic ol {
+  text-align: left;
+}
+
+/* ==========================================================================
+   DROP CAP — Classical manuscript illuminated initial
+   ========================================================================== */
+
+.drop-cap-catholic::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #7B2D3B;
+  background-color: #FDFAED;
+  border: 2px solid #C9A84C;
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+  margin-right: 0.65rem;
+  margin-bottom: 0.1rem;
+  margin-top: 0.2rem;
+  box-shadow: 2px 2px 8px rgba(123, 45, 59, 0.12);
+}
+
+/* ==========================================================================
+   GLASS CARD — Glassmorphism for TOC and pull quotes
+   ========================================================================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 180, 94, 0.35);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   GOD RAYS — Subtle cathedral lighting animation
+   ========================================================================== */
+
+.god-rays {
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(253, 250, 237, 0.15) 30%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 55%
+  );
+  background-size: 200% 200%;
+  animation: godRayMove 15s ease-in-out infinite alternate;
+}
+
+@keyframes godRayMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ==========================================================================
+   STAINED GLASS OVERLAY — Subtle radial gradient decorations
+   ========================================================================== */
+
+.stained-glass-overlay {
+  position: relative;
+}
+
+.stained-glass-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  background:
+    radial-gradient(ellipse 600px 600px at 10% 15%, rgba(123, 45, 59, 0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 85% 10%, rgba(191, 155, 48, 0.03) 0%, transparent 65%),
+    radial-gradient(circle 300px at 75% 50%, rgba(123, 45, 59, 0.025) 0%, transparent 60%),
+    radial-gradient(ellipse 450px 450px at 20% 80%, rgba(191, 155, 48, 0.025) 0%, transparent 65%),
+    radial-gradient(circle 350px at 90% 85%, rgba(123, 45, 59, 0.02) 0%, transparent 55%),
+    radial-gradient(circle 400px at 50% 45%, rgba(191, 155, 48, 0.02) 0%, transparent 60%);
+}
+
+.stained-glass-overlay > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   DIVIDER ORNATE — Decorative cross-centered horizontal rule
+   ========================================================================== */
+
+.divider-ornate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  margin: 2.5rem 0;
+  border: none;
+  position: relative;
+  height: 1.5rem;
+}
+
+.divider-ornate::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent 0%, rgba(191, 155, 48, 0.15) 15%, rgba(191, 155, 48, 0.4) 100%);
+}
+
+.divider-ornate::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, transparent 0%, rgba(191, 155, 48, 0.15) 15%, rgba(191, 155, 48, 0.4) 100%);
+}
+
+.divider-ornate span {
+  flex-shrink: 0;
+  padding: 0 1.5rem;
+  font-size: 1.25rem;
+  color: #C9A84C;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  filter: drop-shadow(0 2px 4px rgba(201, 168, 76, 0.4));
+}
+
+/* ==========================================================================
+   CUSTOM SCROLLBAR — Thin, elegant, liturgical colours
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F0E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(123, 45, 59, 0.45);
+  border-radius: 4px;
+  border: 2px solid #F5F0E1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(123, 45, 59, 0.7);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(123, 45, 59, 0.85);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(123, 45, 59, 0.45) #F5F0E1;
+}
+
+/* ==========================================================================
+   REDUCED MOTION — Respect user preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
